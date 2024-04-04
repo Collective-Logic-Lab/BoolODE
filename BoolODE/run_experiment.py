@@ -312,7 +312,7 @@ def simulateAndSample(argdict):
     ## Boolean to check if a simulation is going to a
     ## 0 steady state, with all genes/proteins dying out
     retry = True
-    trys = 0
+    #trys = 0
     ## timepoints
     tps = [i for i in range(1,len(tspan))]
     ## gene ids
@@ -339,12 +339,14 @@ def simulateAndSample(argdict):
         ## less than 10% of the y_max, drop the simulation.
         ## This check stems from the observation that in some simulations,
         ## all genes go to the 0 steady state in some rare simulations.
-        dfmax = df.max()
-        for col in df.columns:
-            colmax = df[col].max()
-            if colmax < 0.1*x_max:
-                retry= True
-                break
+        
+        # BCD 2024/4/4 removing this check
+        #dfmax = df.max()
+        #for col in df.columns:
+        #    colmax = df[col].max()
+        #    if colmax < 0.1*x_max:
+        #        retry= True
+        #        break
         
         if sampleCells:
             ## Write a single cell to file
@@ -360,9 +362,9 @@ def simulateAndSample(argdict):
             sampledf = sampledf.T
             sampledf.to_csv(outPrefix + 'E' + str(cellid) + '-cell.csv')            
             
-        trys += 1
+        #trys += 1
         # write to file
         df.to_csv(outPrefix + 'E' + str(cellid) + '.csv')
         
-        if trys > 1:
-            print('try', trys)
+        #if trys > 1:
+        #    print('try', trys)
