@@ -465,8 +465,15 @@ class GenerateModel:
         # Initialize empty equations
         for node in self.withRules:
             # Initialize species to 0
-            tempStr = node + " = 0"  
-            exec(tempStr, boolodespace)
+            tempStr = node + " = 0"
+            try:
+                exec(tempStr, boolodespace)
+            except SyntaxError:
+                print("model_generator.generateModelDict: "\
+                      "SyntaxError when trying to execute the "\
+                      "following line:")
+                print("    "+tempStr)
+                raise
 
         # If there is no rule correspondng to a node, it is either
         # a user specified parameter input, or it is assigned a self loop.
